@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: deployment-unidad3
+  name: deployment-unidad3
+  namespace: unidad03
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-unidad3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deployment-unidad3
+    spec:
+      containers:
+      - image: ghcr.io/go-elevate/k8s4arch-hotels:monolith
+        name: k8s4arch-hotels
+        resources: {}
+status: {}
