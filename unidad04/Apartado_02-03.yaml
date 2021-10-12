@@ -29,5 +29,5 @@ spec:
         resources: {}
         ports:
           -contarinerPort: 80
-           protocol. TCP
+           protocol: TCP
 status: {}
