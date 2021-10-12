@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-unidad04
+spec:
+  template:
+    spec:
+     schedule: "*2***"
+     containers:
+       -name:
+        image: ghcr.io/go-elevate/k8s4arch-hotels-backend:slim
+        command: ["python report.py"]
