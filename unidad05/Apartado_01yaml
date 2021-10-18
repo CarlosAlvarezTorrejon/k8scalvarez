@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: deployment-unidad5
+    aplicacion: reserva-hotel
+  name: deployment-unidad5
+  namespace: unidad05
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deployment-unidad5
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deployment-unidad5
+    spec:
+      containers:
+      - image: ghcr.io/go-elevate/k8s4arch-hotels-backend:slim
+        name: k8s4arch-hotels
+        ports:
+           -containerPort: 5000
+
+        envFrom:
+         - name: BBDDConector
+           valueFrom:
+            configMapKeyRef:
+                name: DB_PATH
+                value: /db/hotels.json
+            configMapKeyRef:
+                name:DB_TABLE
+                value: hotels
+
+
+        resources: {}
+
+status: {}
