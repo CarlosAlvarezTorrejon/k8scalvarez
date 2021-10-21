@@ -3,48 +3,48 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment-unidad5
-    aplicacion: reserva-hotel
-  name: deployment-unidad5
-  namespace: unidad05
+    app: deployment-unidad5-02
+    aplicacion: reserva-hotel-backend
+  name: deployment-unidad5-02
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: deployment-unidad5
-  strategy: {}
+      app: deployment-unidad5-02
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 1
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment-unidad5
+        app: deployment-unidad5-02
     spec:
       containers:
-      - image: ghcr.io/go-elevate/k8s4arch-hotels-backend:slim
-        name: k8s4arch-hotels
-        ports:
-           -containerPort: 5000
-
-        envFrom:
-         - name: BBDDConector
-           valueFrom:
-            configMapKeyRef:
-                name: DB_PATH
-                value: /db/hotels.json
-            configMapKeyRef:
-                name:DB_TABLE
-                value: hotels
-
-        -name: my-pod-memory
-         image: polinux/stress
+       - image: ghcr.io/go-elevate/k8s4arch-hotels-backend:slim
+         name: deployment-unidad5-02
+         ports:
+           - containerPort: 5000
+         livenessProbe:
+           tcpSocket:
+            port: 5000
+           initialDelaySeconds: 60
+           periodSeconds: 20
+         readinessProbe:
+           httpGet:
+             path: /status
+             port: 5000
+           initialDelaySeconds: 60
+           periodSeconds: 20
+         envFrom:
+           - configMapRef:
+              name: unidad05-1
          resources:
-          requests:
-            memory: "1G"
-            CPU: "500m"
-         limits:
-            memory: "2G"
-            CPU: "1vCPU"
-
-        resources: {}
-status: {}
-
+           requests:
+             memory: "500m"
+             cpu: "1"
+           limits:
+             memory: "1G"
+             cpu: "2"
