@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unidad05-1
+ data:
+  name: DB_PATH
+  value: /db/hotels.json
+  
+  name: DB_TABLE
+  value: hotels
