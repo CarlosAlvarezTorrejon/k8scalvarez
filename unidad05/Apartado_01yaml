@@ -40,4 +40,4 @@ spec:
            periodSeconds: 20
          envForm:
           -configMapRef:
-            name: configmap-unidad05-1
+            name: unidad05-1
