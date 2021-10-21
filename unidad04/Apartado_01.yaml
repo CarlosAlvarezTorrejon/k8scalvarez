@@ -3,24 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment-unidad3
+    app: deployment-unidad4-01
     aplicacion: reserva-hotel
-  name: deployment-unidad3
-  namespace: unidad04
+  name: deployment-unidad4-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: deployment-unidad3
+      app: deployment-unidad4-01
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment-unidad3
+        app: deployment-unidad4-01
     spec:
       containers:
-      - image: ghcr.io/go-elevate/k8s4arch-hotels:monolith
-        name: k8s4arch-hotels
+      - image: ghcr.io/go-elevate/k8s4arch-hotels:monolith-v2
+        name: deployment-unidad4-01
         resources: {}
 status: {}
