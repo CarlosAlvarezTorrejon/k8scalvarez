@@ -2,12 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
-  labels:
-    app: deployment-unidad5-01
-    aplicacion: reserva-hotel
+  labels:   
+   app: deployment-unidad5-01
+   aplicacion: reserva-hotel-backend
   name: deployment-unidad5-01
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: deployment-unidad5-01
@@ -23,21 +23,21 @@ spec:
         app: deployment-unidad5-01
     spec:
       containers:
-       - image: ghcr.io/go-elevate/k8s4arch-hotels:monolith-v2
+       - image: ghcr.io/go-elevate/k8s4arch-hotels-backend:slim
          name: deployment-unidad5-01
          ports:
-           - containerPort: 80
+           - containerPort: 5000
          livenessProbe:
            tcpSocket:
-            port: 80
+            port: 5000
            initialDelaySeconds: 60
            periodSeconds: 20
          readinessProbe:
            httpGet:
-             path: /
-             port: 80
+             path: /status
+             port: 5000
            initialDelaySeconds: 60
-           periodSeconds: 20
-         envForm:
-          -configMapRef:
-            name: unidad05-1
+           periodSeconds: 20       
+         envFrom:
+           - configMapRef:
+              name: unidad05-1
