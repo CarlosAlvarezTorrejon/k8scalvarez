@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: deployment-unidad7-Backend
+    aplicacion: reserva-hotel-backend
+  name: deployment-unidad7-Backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-unidad7-Backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deployment-unidad7-Backend
+    spec:
+      containers:
+       - name: backend
+         image: ghcr.io/go-elevate/k8s4arch-hotels-backend:stable
+         ports:
+           - containerPort: 80
+         livenessProbe:
+           tcpSocket:
+            port: 80
+           initialDelaySeconds: 60
+           periodSeconds: 20
+         readinessProbe:
+           httpGet:
+             path: /
+             port: 80
+           initialDelaySeconds: 60
+           periodSeconds: 20
+         command: ["docker run --entrypoint python ghcr.io/go-elevate/k8s4arch-hotels-backend:slim"]
+         args: ["migrations.py"]
