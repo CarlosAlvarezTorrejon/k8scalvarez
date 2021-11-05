@@ -1,0 +1,34 @@
+##BACKEND##
+apiVersion: networking.k8s.io
+kind : Ingress
+metadata:
+  name: ingress-brackend
+  annotations:
+   kubernetes,io/ingress.class: public
+spec:
+  rules:
+   -host: api-hotels.internal.itrip.io
+    http:
+     paths:
+      -backend:
+        -service:
+          name: deployment-unidad7-Backend
+          port: 80
+         path: /hotels
+##FRONTEND##
+apiVersion: networking.k8s.io
+kind : Ingress
+metadata:
+  name: ingress-frontend
+  annotations:
+   kubernetes,io/ingress.class: public
+spec:
+  rules:
+   -host: awesome-hotels.internal.itrip.io
+    http:
+     paths:
+      -backend:
+        -service:
+          name: deployment-unidad7-Frontend
+          port: 80
+       path: /
